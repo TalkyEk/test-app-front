@@ -1,5 +1,5 @@
 import axios from "axios"
-import { DELETE_USER, CREATE_USER_ITEM, EDIT_USER, SELECTED_USER, SELECTED_USER_PROPERTY_CHANGE, NEW_USER_MODAL, GET_DATA } from "./actionTypes";
+import { DELETE_USER, CREATE_USER_ITEM, EDIT_USER, SELECTED_USER, SELECTED_USER_PROPERTY_CHANGE, GET_DATA } from "./actionTypes";
 
 export const createUser = (fullName, company, phone) => async dispatch => {
   const newUser = await axios.post(`http://localhost:3001/api/user/`, {fullName, company, phone})
@@ -32,14 +32,16 @@ export const editUser = (_id, newFullName, newCompany, newPhone) => async dispat
   });
 };
 
-export const selectUser = (_id, fullName, company, phone) => {
-  return {
+export const selectUser = (_id) => async dispatch => {
+  const data = await axios.get(`http://localhost:3001/api/user/${_id}`);
+  const {fullName, company, phone} = data.data;
+  dispatch({
     type: SELECTED_USER,
     _id,
     fullName,
     company,
     phone
-  };
+  });
 };
 
 export const selectedPropertyChange = (propName, newValue) => {
@@ -47,12 +49,6 @@ export const selectedPropertyChange = (propName, newValue) => {
     type: SELECTED_USER_PROPERTY_CHANGE,
     propName,
     newValue
-  };
-};
-
-export const newUserModal = () => {
-  return {
-    type: NEW_USER_MODAL
   };
 };
 

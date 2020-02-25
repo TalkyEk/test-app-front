@@ -1,31 +1,55 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import EditIcon from '@material-ui/icons/Edit';
 
 import "./UsersListItem.scss";
 import { deleteUser, selectUser } from "../../actions/UserActions";
+import { useHistory } from 'react-router'
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+}))(TableRow);
 
 const UsersListItem = (props) => {
   const { _id, fullName, phone } = props;
+  const history = useHistory();
+  const click = () => {
+    props.selectUser(_id)
+    history.push("/form");
+  }
   return (
-    <tr>
-      <th scope="row">{_id}</th>
-      <td>{fullName}</td>
-      <td>{phone}</td>
-      <td>
-        <button
-          onClick={() => props.selectUser(_id)}
-          type="button"
-          className="btn btn-success btn-sm"
-          data-toggle="modal"
-          data-target="#usersModalLong"
-        >
-          <i className="fa fa-pencil-square-o" />
-        </button>
-        <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => props.deleteUser(_id)}>
-          <i className="fa fa-trash-o" />
-        </button>
-      </td>
-    </tr>
+    <StyledTableRow key={_id}>
+      <StyledTableCell component="th" scope="row">{_id}</StyledTableCell>
+      <StyledTableCell>{fullName}</StyledTableCell>
+      <StyledTableCell>{phone}</StyledTableCell>
+      <StyledTableCell>
+        <Button variant="contained" color="inherit" onClick={() => click(_id)}>
+          <EditIcon />
+        </Button>
+      <Button variant="contained" color="default" onClick={() => props.deleteUser(_id)}>
+          <DeleteForeverOutlinedIcon />
+        </Button>
+      </StyledTableCell>
+    </StyledTableRow>
   );
 };
 
@@ -44,3 +68,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersListItem);
+
+
+
+
+

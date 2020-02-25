@@ -1,29 +1,26 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 
 import "./Users.scss";
 import UsersList from "../UsersList/UsersList";
-import UsersModal from "../UsersModal/UsersModal";
-import { newUserModal, getData } from "../../actions/UserActions";
-
+import { getData } from "../../actions/UserActions";
 
 const Users = (props) => {
   useEffect(() => {
     props.getData()
-  }, []);
+  });
+  const history = useHistory();
+  function click () {
+    history.push("/form");
+  }
   return (
     <div>
       <UsersList />
-        <button
-          type="button"
-          className="btn btn-dark"
-          onClick={props.newUserModal}
-          data-toggle="modal"
-          data-target="#usersModalLong"
-        >
-        Add User
-        </button>
-      <UsersModal />
+      <Button variant="contained" color="default" onClick={click}>
+        New User
+      </Button>
     </div>
   );
 };
@@ -37,7 +34,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    newUserModal: () => dispatch(newUserModal()),
     getData: () => dispatch(getData())
   };
 };

@@ -1,4 +1,4 @@
-import { DELETE_USER, CREATE_USER_ITEM, EDIT_USER, SELECTED_USER, SELECTED_USER_PROPERTY_CHANGE, NEW_USER_MODAL, GET_DATA } from "../actions/actionTypes";
+import { DELETE_USER, CREATE_USER_ITEM, EDIT_USER, SELECTED_USER, SELECTED_USER_PROPERTY_CHANGE, GET_DATA } from "../actions/actionTypes";
 
 const initialValues = { _id: null, fullName: "", company: "", phone: "" };
 
@@ -10,7 +10,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_USER_ITEM:
-      return { ...state, usersData: [...state.usersData, { _id: action._id, fullName: action.fullName, company: action.company, phone: action.phone }] };
+      return { usersData: [...state.usersData, { _id: action._id, fullName: action.fullName, company: action.company, phone: action.phone }], activeUser: initialValues };
 
     case DELETE_USER:
       const index1 = state.usersData.findIndex(el => el._id === action._id);
@@ -21,23 +21,15 @@ const userReducer = (state = initialState, action) => {
     case EDIT_USER:
       const index2 = state.usersData.findIndex(el => el._id === action._id);
       const newArray2 = state.usersData.slice();
-
       newArray2[index2] = { _id: action._id, fullName: action.newFullName, company: action.newCompany, phone: action.newPhone };
 
-      return { ...state, usersData: newArray2 };
+      return { usersData: newArray2, activeUser: initialValues };
 
     case SELECTED_USER:
-      const index3 = state.usersData.findIndex(el => el._id === action._id);
-      const newArray3 = state.usersData.slice();
-      const actCust = newArray3[index3];
-
-      return { ...state, activeUser: actCust };
+      return { ...state, activeUser: { _id: action._id, fullName: action.fullName, company: action.company, phone: action.phone } };
 
     case SELECTED_USER_PROPERTY_CHANGE:
       return { ...state, activeUser: { ...state.activeUser, [action.propName]: action.newValue } };
-
-    case NEW_USER_MODAL:
-      return { ...state, activeUser: { ...initialValues } };
 
     case GET_DATA:
       return { ...state, usersData: action.newData };
