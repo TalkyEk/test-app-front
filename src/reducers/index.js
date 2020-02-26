@@ -1,4 +1,4 @@
-import users from "./usersCustomers";
+import users from "./users";
 
 
 export default { users };

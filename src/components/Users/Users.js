@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import UserLogout from '../UsersLogout/UsersLogout';
 
 import "./Users.scss";
 import UsersList from "../UsersList/UsersList";
@@ -21,6 +22,7 @@ const Users = (props) => {
       <Button variant="contained" color="default" onClick={click}>
         New User
       </Button>
+      <UserLogout />
     </div>
   );
 };

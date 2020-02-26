@@ -4,3 +4,4 @@ export const EDIT_USER = "EDIT_USER";
 export const SELECTED_USER = "SELECTED_USER";
 export const SELECTED_USER_PROPERTY_CHANGE = "SELECTED_USER_PROPERTY_CHANGE";
 export const GET_DATA = "GET_DATA"
+export const USER_LOGIN = "USER_LOGIN"

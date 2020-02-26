@@ -1,16 +1,25 @@
-import { DELETE_USER, CREATE_USER_ITEM, EDIT_USER, SELECTED_USER, SELECTED_USER_PROPERTY_CHANGE, GET_DATA } from "../actions/actionTypes";
+import {
+  DELETE_USER,
+  CREATE_USER_ITEM,
+  EDIT_USER,
+  SELECTED_USER,
+  SELECTED_USER_PROPERTY_CHANGE,
+  GET_DATA,
+  USER_LOGIN
+} from '../actions/actionTypes'
 
 const initialValues = { _id: null, fullName: "", company: "", phone: "" };
 
 const initialState = {
   usersData: [],
-  activeUser: initialValues
+  activeUser: initialValues,
+  loggedIn: null
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_USER_ITEM:
-      return { usersData: [...state.usersData, { _id: action._id, fullName: action.fullName, company: action.company, phone: action.phone }], activeUser: initialValues };
+      return { ...state, usersData: [...state.usersData, { _id: action._id, fullName: action.fullName, company: action.company, phone: action.phone }]};
 
     case DELETE_USER:
       const index1 = state.usersData.findIndex(el => el._id === action._id);
@@ -23,7 +32,7 @@ const userReducer = (state = initialState, action) => {
       const newArray2 = state.usersData.slice();
       newArray2[index2] = { _id: action._id, fullName: action.newFullName, company: action.newCompany, phone: action.newPhone };
 
-      return { usersData: newArray2, activeUser: initialValues };
+      return { ...state, usersData: newArray2, activeUser: initialValues };
 
     case SELECTED_USER:
       return { ...state, activeUser: { _id: action._id, fullName: action.fullName, company: action.company, phone: action.phone } };
@@ -33,6 +42,9 @@ const userReducer = (state = initialState, action) => {
 
     case GET_DATA:
       return { ...state, usersData: action.newData };
+
+    case USER_LOGIN:
+      return { ...state, loggedIn: action.token };
 
     default:
       return state;

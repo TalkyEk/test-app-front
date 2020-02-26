@@ -1,5 +1,5 @@
 import axios from "axios"
-import { DELETE_USER, CREATE_USER_ITEM, EDIT_USER, SELECTED_USER, SELECTED_USER_PROPERTY_CHANGE, GET_DATA } from "./actionTypes";
+import { DELETE_USER, CREATE_USER_ITEM, EDIT_USER, SELECTED_USER, SELECTED_USER_PROPERTY_CHANGE, GET_DATA, USER_LOGIN } from "./actionTypes";
 
 export const createUser = (fullName, company, phone) => async dispatch => {
   const newUser = await axios.post(`http://localhost:3001/api/user/`, {fullName, company, phone})
@@ -60,3 +60,11 @@ export const getData = () => async dispatch => {
     newData
   });
 };
+
+export const login = (token = null) => {
+  return {
+    type: USER_LOGIN,
+    token
+  };
+};
+
