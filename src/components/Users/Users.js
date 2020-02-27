@@ -10,8 +10,9 @@ import { getData } from "../../actions/UserActions";
 
 const Users = (props) => {
   useEffect(() => {
-    props.getData()
-  });
+    if(!props.usersData.length)
+      props.getData()
+  }, []);
   const history = useHistory();
   function click () {
     history.push("/form");

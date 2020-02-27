@@ -19,7 +19,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_USER_ITEM:
-      return { ...state, usersData: [...state.usersData, { _id: action._id, fullName: action.fullName, company: action.company, phone: action.phone }]};
+      return { ...state, usersData: [...state.usersData, { _id: action._id, fullName: action.fullName, company: action.company, phone: action.phone }], activeUser: initialValues };
 
     case DELETE_USER:
       const index1 = state.usersData.findIndex(el => el._id === action._id);

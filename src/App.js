@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <Switch>
         <PrivateRoute path="/" exact component={Users} auth={this.props.loggedIn} />
-        <PrivateRoute path="/form" exact component={Form} />
+        <PrivateRoute path="/form" exact component={Form} auth={this.props.loggedIn} />
         <Route path="/login" exact component={LoginFacebook} />
       </Switch>
     );
